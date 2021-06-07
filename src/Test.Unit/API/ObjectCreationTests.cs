@@ -93,6 +93,7 @@ namespace Test.Unit
         {
             Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
+            
             Assert.IsTrue(request.GetHeaderParams().ContainsKey("X-Riot-Token"));
         }
 
