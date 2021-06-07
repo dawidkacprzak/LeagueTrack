@@ -10,15 +10,31 @@ namespace API.Endpoints
 {
     public class EndpointSummonerV4 : IEndpoint
     {
-        public string GetEndpointPath()
+        private RequestDirector requestDirector = new RequestDirector();
+        private string apiKey;
+        private int oneMinRequestRate;
+        private int twoMinRequestRate;
+        private ELocation location;
+
+        public EndpointSummonerV4(string apiKey, int oneMinRequestRate, int twoMinRequestRate, ELocation location)
         {
-            return "/lol/summoner/v4/";
+            this.apiKey = apiKey;
+            this.oneMinRequestRate = oneMinRequestRate;
+            this.twoMinRequestRate = twoMinRequestRate;
+            this.location = location;
         }
 
-        public RiotRequest ByName(string summonerName)
+        public string GetEndpointPath()
         {
-            return new RiotRequest();
+            return "/lol/summoner/v4";
         }
-        
+
+        public IRequest ByName(string summonerName)
+        {
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneMinRequestRate, twoMinRequestRate, location);
+            requestDirector.Construct($"{GetEndpointPath()}/summoners/by-name/{summonerName}");
+            return requestDirector.builder.GetRequest();
+        }
+
     }
 }

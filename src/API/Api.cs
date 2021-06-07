@@ -7,26 +7,20 @@ namespace API
     public sealed class Api
     {
         private static Api _api;
-        private string apiKey;
-        private int oneMinRateLimit;
-        private int twoMinRateLimit;
-        public IEndpoint SummonerV4;
+        public EndpointSummonerV4 SummonerV4;
 
-        public static Api GetInstance(string apiKey, int oneMinRateLimit, int twoMinRateLimit)
+        public static Api GetInstance(string apiKey, int oneMinRateLimit, int twoMinRateLimit, ELocation location)
         {
             if(_api == null)
             {
-                _api = new Api(apiKey, oneMinRateLimit,twoMinRateLimit);
+                _api = new Api(apiKey, oneMinRateLimit,twoMinRateLimit, location);
             }
             return _api;
         }
 
-        private Api(string apiKey, int oneMinRateLimit, int twoMinRateLimit)
+        private Api(string apiKey, int oneMinRateLimit, int twoMinRateLimit,ELocation location)
         {
-            this.apiKey = apiKey;
-            this.oneMinRateLimit = oneMinRateLimit;
-            this.twoMinRateLimit = twoMinRateLimit;
-            SummonerV4 = new EndpointSummonerV4();
+            SummonerV4 = new EndpointSummonerV4(apiKey,oneMinRateLimit,twoMinRateLimit,location);
         }
     }
 }

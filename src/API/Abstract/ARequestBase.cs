@@ -10,14 +10,13 @@ namespace API.Abstract
     {
         protected Dictionary<string, string> QueryParameters;
         protected Dictionary<string, string> HeaderParameters;
-        public string HttpAddress { get; private set; }
-
+        public virtual string HttpAddress { get; protected set; }
+        public virtual string MethodPath { get; protected set; }
         public ARequestBase()
         {
             QueryParameters = new Dictionary<string, string>();
             HeaderParameters = new Dictionary<string, string>();
         }
-
 
         public virtual Dictionary<string, string> GetHeaderParams()
         {
@@ -42,6 +41,11 @@ namespace API.Abstract
         public virtual void SetQueryParams(Dictionary<string, string> parameters)
         {
             this.QueryParameters = parameters;
+        }
+
+        public virtual void SetMethodPath(string methodPath)
+        {
+            this.MethodPath = methodPath;
         }
     }
 }

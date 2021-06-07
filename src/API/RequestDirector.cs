@@ -11,15 +11,21 @@ namespace API
     {
         public IRequestBuilder builder;
 
-        public void Construct(Dictionary<string,string> queryParams, Dictionary<string,string> headerParams)
+        public void Construct(string methodPath, Dictionary<string, string> queryParams = null, Dictionary<string, string> headerParams = null)
         {
-            foreach(var qp in queryParams)
-                builder.AddQueryParam(qp.Key, qp.Value);
+            if (queryParams != null)
+                foreach (var qp in queryParams)
+                    builder.AddQueryParam(qp.Key, qp.Value);
 
-            foreach (var hp in headerParams)
-                builder.AddHeaderParam(hp.Key, hp.Value);
+            if (headerParams != null)
+                foreach (var hp in headerParams)
+                    builder.AddHeaderParam(hp.Key, hp.Value);
+
+            builder.SetMethodPath(methodPath);
 
             builder.BuildRequest();
         }
+
+
     }
 }
