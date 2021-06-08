@@ -21,24 +21,24 @@ namespace Test.Unit
         [Test]
         public void Check_Api_GetInstance_Do_Not_Throw()
         {
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
         }
 
         [Test]
         public void Check_Api_GetInstance_Multiple_Times_Do_Not_Throw()
         {
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
-            Assert.DoesNotThrow(() => Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
+            Assert.DoesNotThrow(() => new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE));
         }
 
         [Test]
         public void Riot_Request_Builder_Header_And_Query_Params_Are_Added()
         {
             RequestDirector director = new RequestDirector();
-            director.builder = new RiotRequestBuilder(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            director.builder = new RiotRequestBuilder(TestKey, ELocation.EUNE);
             Dictionary<string, string> queryParams = new Dictionary<string, string> {{"A", "B"}};
             Dictionary<string, string> headerParams = new Dictionary<string, string> {{"A1", "B1"}};
 
@@ -56,7 +56,7 @@ namespace Test.Unit
         [Test]
         public void API_Endpoints_Correct_Path()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             Assert.AreEqual(instance.SummonerV4.GetEndpointPath(), "/lol/summoner/v4");
         }
 
@@ -65,7 +65,7 @@ namespace Test.Unit
         {
             Assert.AreEqual(ELocation.EUNE.ToTextName(), "eun1");
             Assert.AreEqual(ELocation.NoInfo.ToTextName(), "");
-            Assert.Throws<NotImplementedException>(() => ((ELocation)(-3)).ToTextName());
+            Assert.Throws<NotImplementedException>(() => ((ELocation) (-3)).ToTextName());
             int eLocationCount = Enum.GetNames(typeof(ELocation)).Length;
             Assert.AreEqual(eLocationCount, 2); //Just to don't forget about insert and CHECK next locations. 
         }
@@ -89,7 +89,7 @@ namespace Test.Unit
         [Test]
         public void API_Endpoints_Contains_Key()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest requestByName = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount("Rekurencja");
             RiotRequest requestByPuuid = (RiotRequest) instance.SummonerV4.ByPuuid("Rekurencja");
@@ -105,35 +105,37 @@ namespace Test.Unit
         [Test]
         public void API_Endpoint_SummonerV4_ByName_CorrectHttpPath()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             Assert.AreEqual(request.HttpAddress,
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Rekurencja");
             Assert.IsNotNull(request.HttpAddress);
         }
-        
+
         [Test]
         public void API_Endpoint_SummonerV4_ByAccount_CorrectHttpPath()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByAccount("encryptedAccountId");
             Assert.AreEqual(request.HttpAddress,
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-account/encryptedAccountId");
             Assert.IsNotNull(request.HttpAddress);
         }
+
         [Test]
         public void API_Endpoint_SummonerV4_ByPuuid_CorrectHttpPath()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByPuuid("encryptedPUUID");
             Assert.AreEqual(request.HttpAddress,
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/encryptedPUUID");
             Assert.IsNotNull(request.HttpAddress);
         }
+
         [Test]
         public void API_Endpoint_SummonerV4_BySummoner_CorrectHttpPath()
         {
-            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.BySummoner("encryptedSummonerId");
             Assert.AreEqual(request.HttpAddress,
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/encryptedSummonerId");

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace API.Implementation
 {
+    /// <summary>
+    /// Concrete builder pattern implementation for riot requests
+    /// </summary>
     public class RiotRequestBuilder : IRequestBuilder
     {
         private RiotRequest request = new RiotRequest();
@@ -13,22 +16,39 @@ namespace API.Implementation
         Dictionary<string, string> queryParameters = new Dictionary<string, string>();
         Dictionary<string, string> headerParameters = new Dictionary<string, string>();
 
-        public RiotRequestBuilder(string apiKey, int oneMinRateLimit, int twoMinRateLimit, ELocation location)
+        /// <summary>
+        /// Creates new builder object
+        /// </summary>
+        /// <param name="apiKey">prod/dev riot api key</param>
+        /// <param name="location">Location</param>
+        public RiotRequestBuilder(string apiKey, ELocation location)
         {
             this.riotApiKey = apiKey;
             this.location = location;
         }
 
+        /// <summary>
+        /// Add new header parameter for all built requests
+        /// </summary>
+        /// <param name="key">Parameter name</param>
+        /// <param name="value">Parameter value</param>
         public void AddHeaderParam(string key, string value)
         {
             headerParameters.Add(key, value);
         }
-
+        /// <summary>
+        /// Add new query parameter for all built requests
+        /// </summary>
+        /// <param name="key">Parameter name</param>
+        /// <param name="value">Parameter value</param>
         public void AddQueryParam(string key, string value)
         {
             queryParameters.Add(key, value);
         }
 
+        /// <summary>
+        /// Builds new riot request
+        /// </summary>
         public void BuildRequest()
         {
             Dictionary<string, string> headerParametersWithKey = headerParameters;
@@ -40,11 +60,19 @@ namespace API.Implementation
             request.SetMethodPath(this.methodPath);
         }
 
+        /// <summary>
+        /// Retrieves new built RiotRequest
+        /// </summary>
+        /// <returns>New riot request, empty RiotRequest(not null) object if not build with BuildRequest method</returns>
         public IRequest GetRequest()
         {
             return request;
         }
 
+        /// <summary>
+        /// Sets the method path. Concatenated at the end of base uri path
+        /// </summary>
+        /// <param name="path"></param>
         public void SetMethodPath(string path)
         {
             this.methodPath = path;
