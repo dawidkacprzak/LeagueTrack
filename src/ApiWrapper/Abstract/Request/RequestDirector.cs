@@ -1,6 +1,6 @@
-﻿using ApiWrapper.Abstract;
-using System.Collections.Generic;
-namespace ApiWrapper
+﻿using System.Collections.Generic;
+
+namespace ApiWrapper.Abstract.Request
 {
     
     /// <summary>

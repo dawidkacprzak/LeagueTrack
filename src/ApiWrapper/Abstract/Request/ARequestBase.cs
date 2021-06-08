@@ -13,7 +13,7 @@ namespace ApiWrapper.Abstract.Request
         /// <summary>
         /// Final Uri sent to API
         /// </summary>
-        public virtual string HttpAddress { get; protected set; }
+        protected virtual string httpAddress { get; set; }
 
         /// <summary>
         /// Method path for api. Useful when we want to build HttpAddress.
@@ -36,6 +36,15 @@ namespace ApiWrapper.Abstract.Request
         public virtual Dictionary<string, string> GetHeaderParams()
         {
             return headerParameters;
+        }
+
+        /// <summary>
+        /// Retrieves final request uri
+        /// </summary>
+        /// <returns></returns>
+        public string GetHttpAddress()
+        {
+            return httpAddress + BuildQueryParameters();
         }
 
         /// <summary>
@@ -64,7 +73,7 @@ namespace ApiWrapper.Abstract.Request
         /// <param name="httpAddress">New URI</param>
         public virtual void SetHttpAddress(string httpAddress)
         {
-            this.HttpAddress = httpAddress;
+            this.httpAddress = httpAddress;
         }
 
         /// <summary>
@@ -84,6 +93,19 @@ namespace ApiWrapper.Abstract.Request
         public virtual void SetMethodPath(string methodPath)
         {
             this.MethodPath = methodPath;
+        }
+
+        private string BuildQueryParameters()
+        {
+            char separator = '?';
+            string finalQueryParams = string.Empty;
+            foreach (var param in queryParameters)
+            {
+                finalQueryParams += $"{separator}{param.Key}={param.Value}";
+                separator = '&';
+            }
+
+            return finalQueryParams;
         }
     }
 }

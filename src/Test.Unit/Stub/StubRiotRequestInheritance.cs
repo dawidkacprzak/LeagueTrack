@@ -7,7 +7,7 @@ namespace Test.Unit.Stub
     {
         public StubRiotRequestInheritance()
         {
-            HttpAddress = "throws exception";
+            httpAddress = "throws exception";
         }
     }
 }

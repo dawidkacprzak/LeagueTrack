@@ -14,6 +14,12 @@ namespace ApiWrapper.Abstract.Request
         public Dictionary<string, string> GetHeaderParams();
 
         /// <summary>
+        /// Retrieves uri for request
+        /// </summary>
+        /// <returns></returns>
+        public string GetHttpAddress();
+
+        /// <summary>
         /// Retrieves query parameters
         /// </summary>
         /// <returns>Dictionary with query parameters</returns>
