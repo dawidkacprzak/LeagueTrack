@@ -16,8 +16,7 @@ namespace API.Implementation
         }
 
         private ELocation location;
-
-
+        
         public void SetLocation(ELocation location)
         {
             this.location = location;

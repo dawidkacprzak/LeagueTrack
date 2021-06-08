@@ -7,8 +7,8 @@ C# Based platform for tracking players.
 | Feature        | Status       |
 | ------------- |:-------------:| 
 | Riot API Wrapper     | ⚙️ | 
+| Riot API Wrapper rate limiter     | ❌ | 
 | Rest API     | ❌ |
-| Rest API Rate limiter | ❌ |
 | Mobile application | ❌ |
 | Web application | ❌ |
 | Desktop application | ❌ |

@@ -4,9 +4,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using API.Abstract;
 using Test.Unit.Stub;
 
@@ -68,8 +65,8 @@ namespace Test.Unit
             Assert.AreEqual(ELocation.EUNE.ToTextName(), "eun1");
             Assert.AreEqual(ELocation.NoInfo.ToTextName(), "");
             Assert.Throws<NotImplementedException>(() => ((ELocation)(-3)).ToTextName());
-            int ELocationCount = Enum.GetNames(typeof(ELocation)).Length;
-            Assert.AreEqual(ELocationCount, 2); //Just to don't forget about insert and CHECK next locations. 
+            int eLocationCount = Enum.GetNames(typeof(ELocation)).Length;
+            Assert.AreEqual(eLocationCount, 2); //Just to don't forget about insert and CHECK next locations. 
         }
 
         [Test]
@@ -89,12 +86,14 @@ namespace Test.Unit
         }
 
         [Test]
-        public void API_Endpoint_SummonerV4_ByName_Contains_Key()
+        public void API_Endpoints_Contains_Key()
         {
             Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
-            RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
-            
-            Assert.IsTrue(request.GetHeaderParams().ContainsKey("X-Riot-Token"));
+            RiotRequest requestByName = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
+            RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount("Rekurencja");
+
+            Assert.IsTrue(requestByName.GetHeaderParams().ContainsKey("X-Riot-Token"));
+            Assert.IsTrue(requestByAccount.GetHeaderParams().ContainsKey("X-Riot-Token"));
         }
 
         [Test]
@@ -104,6 +103,16 @@ namespace Test.Unit
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             Assert.AreEqual(request.HttpAddress,
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Rekurencja");
+            Assert.IsNotNull(request.HttpAddress);
+        }
+        
+        [Test]
+        public void API_Endpoint_SummonerV4_ByAccount_CorrectHttpPath()
+        {
+            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            RiotRequest request = (RiotRequest) instance.SummonerV4.ByAccount("testid");
+            Assert.AreEqual(request.HttpAddress,
+                "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-account/testid");
             Assert.IsNotNull(request.HttpAddress);
         }
     }

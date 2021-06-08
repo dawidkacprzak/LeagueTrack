@@ -29,10 +29,26 @@ namespace API.Endpoints
             return "/lol/summoner/v4";
         }
 
+        
+        /// <summary>
+        /// Create request for fetching summoner info by summoner name
+        /// </summary>
+        /// <param name="summonerName">Summoner name</param>
         public IRequest ByName(string summonerName)
         {
             requestDirector.builder = new RiotRequestBuilder(apiKey, oneMinRequestRate, twoMinRequestRate, location);
             requestDirector.Construct($"{GetEndpointPath()}/summoners/by-name/{summonerName}");
+            return requestDirector.builder.GetRequest();
+        }
+
+        /// <summary>
+        /// Create request for fetching summoner info by account id
+        /// </summary>
+        /// <param name="encryptedAccountId">Encrypted account id</param>
+        public IRequest ByAccount(string encryptedAccountId)
+        {
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneMinRequestRate, twoMinRequestRate, location);
+            requestDirector.Construct($"{GetEndpointPath()}/summoners/by-account/{encryptedAccountId}");
             return requestDirector.builder.GetRequest();
         }
 
