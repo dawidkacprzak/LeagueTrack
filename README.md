@@ -39,7 +39,7 @@ All parts of this project are allowed to re-use for your own - including modific
 
 To use api you have to create new Api instance
 ```cs
-Api instance = Api.GetInstance(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
+Api instance = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
 Just insert your `api key` from RIOT Developer portal https://developer.riotgames.com/
 
