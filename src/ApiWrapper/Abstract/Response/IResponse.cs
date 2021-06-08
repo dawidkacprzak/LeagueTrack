@@ -11,10 +11,10 @@ namespace ApiWrapper.Abstract.Response
         /// Information - did api returned successful status code?
         /// </summary>
         /// <returns></returns>
-        public bool Success();
+        public bool IsSuccess();
 
         /// <summary>
-        /// Returns exception from request sender if any occured
+        /// Returns exception from request sender if any occurred
         /// </summary>
         /// <returns></returns>
         public Exception GetThrownException();
@@ -24,5 +24,10 @@ namespace ApiWrapper.Abstract.Response
         /// </summary>
         /// <returns></returns>
         public string GetResponseContent();
+        /// <summary>
+        /// Returns message if occurred
+        /// </summary>
+        /// <returns></returns>
+        public string GetMessage();
     }
 }

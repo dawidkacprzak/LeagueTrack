@@ -6,7 +6,7 @@ C# Based platform for tracking players.
 ❌ - TODO
 | Feature        | Status       |
 | ------------- |:-------------:| 
-| Riot API Wrapper     | ⚙️ | 
+| Riot API Wrapper     | ✔️ | 
 | Riot API Wrapper rate limiter     | ❌ | 
 | Rest API     | ❌ |
 | Mobile application | ❌ |
@@ -64,6 +64,56 @@ IRequest request = instance.SummonerV4.ByName("Rekurencja");
 
 You can also check final HTTP link from `HttpAddress` field.    
 <br>
-Full list of **endpoints** and **methods** is in `Work in progress` state 
+### Requests
 
-Rate limiter and request invoker classes are still in `Work in progress` state.
+Requests can be called by `RiotRequestSender` object.
+
+Creation process is done by builder pattern using `RequestSenderDirector` class.
+
+#### Example
+
+```cs
+Api api = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
+RequestSenderDirector director = new RequestSenderDirector();
+director.builder = new RiotRequestSenderBuilder();
+director.Construct();
+IRequestSender sender = director.builder.GetRequestSender(); 
+//Constructed IRequestSender can be used multiple times. You dont have to contruct it every request
+
+RiotRequest r = (RiotRequest)api.SummonerV4.ByName("Rekurencja"); 
+//Api request preparing
+
+IResponse getSummonerByNameResponse = await sender.GetAsync(r); 
+//Api call
+
+Summoner summoner = JsonConvert.DeserializeObject<Summoner>(getSummonerByNameResponse.GetResponseContent()); 
+//Response mapping to concrete object
+
+```
+
+
+### Full list of **endpoints** and **methods** 
+| Endpoint        | Method       | Response Mapping Object   |
+| ------------- |:-------------:|:-------------:| 
+| **`SummonerV4`**     | `ByName(`Summoner_Name`)` | `Summoner` |
+| **`SummonerV4`**     | `ByAccount(`Encrypted_account_id`)` | `Summoner` | 
+| **`SummonerV4`**     | `ByPuuid(`Encrypted_Puuid`)` | `Summoner` |
+| **`SummonerV4`** | `BySummoner(`Encrypted_SummonerId`)` | `Summoner` |
+
+<br>
+
+>New endpoints will be created only if this project need a new one.  
+>If you need more endpoints/methods you can open a issue or (i prefer) `Collaborate by pull request`
+
+
+**Rate limiter is still in `Work in progress` state.**
+
+---
+
+## Tests
+All classes are tested by `Test.Integration` and `Test.Unit` projects.
+You can always run it .
+
+`Test.Integration` project needs the small configuration - just replace `API_KEY` field in `IntegrationConfiguration.cs` file. 
+
+If you dont have a production key you can always use development.

@@ -12,6 +12,7 @@ namespace ApiWrapper.Implementation.Response
         private bool success;
         private Exception thrownException;
         private string responseContent;
+        private string message;
 
         /// <summary>
         /// Creates new Riot response object based on HttpResponseMessage
@@ -20,16 +21,25 @@ namespace ApiWrapper.Implementation.Response
         /// <param name="ex">Exception from response sender</param>
         public RiotResponse(HttpResponseMessage message, Exception ex = null)
         {
-            success = message.IsSuccessStatusCode;
-            responseContent = message.Content.ReadAsStringAsync().Result;
+            if (message != null)
+            {
+                success = message.IsSuccessStatusCode;
+                responseContent = message.Content.ReadAsStringAsync().Result;
+            }
+            else
+            {
+                success = false;
+            }
+
             thrownException = ex;
+            if (ex != null) this.message = ex.Message;
         }
         
         /// <summary>
         /// Information request finished with success status code
         /// </summary>
         /// <returns></returns>
-        public bool Success()
+        public bool IsSuccess()
         {
             return success;
         }
@@ -50,6 +60,11 @@ namespace ApiWrapper.Implementation.Response
         public string GetResponseContent()
         {
             return responseContent;
+        }
+
+        public string GetMessage()
+        {
+            return message;
         }
     }
 }
