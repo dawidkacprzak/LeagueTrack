@@ -54,11 +54,13 @@ From project settings (look at riot developer portal -> app register) check your
 Create request object with following statement
 
 ```cs
-RiotRequest request = instance.SummonerV4.ByName("Rekurencja");
+RiotRequest request = (RiotRequest)instance.SummonerV4.ByName("Rekurencja");
+//Or
+IRequest request = instance.SummonerV4.ByName("Rekurencja");
 ```
 `SummonerV4` stands for **endpoint** and **ByName** is just method.
 
-`RiotRequest` object is wrapped by your api key in headers. You can check it in `HeaderParameters` field (`GetHeaderParams method`).
+`RiotRequest` object is request wrapper which contain your api key, server location, header and query parameters, URL address and method path.
 
 You can also check final HTTP link from `HttpAddress` field.    
 <br>
