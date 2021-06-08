@@ -95,10 +95,10 @@ Summoner summoner = JsonConvert.DeserializeObject<Summoner>(getSummonerByNameRes
 ### Full list of **endpoints** and **methods** 
 | Endpoint        | Method       | Response Mapping Object   |
 | ------------- |:-------------:|:-------------:| 
-| **`SummonerV4`**     | `ByName(`Summoner_Name`)` | `Summoner` |
-| **`SummonerV4`**     | `ByAccount(`Encrypted_account_id`)` | `Summoner` | 
-| **`SummonerV4`**     | `ByPuuid(`Encrypted_Puuid`)` | `Summoner` |
-| **`SummonerV4`** | `BySummoner(`Encrypted_SummonerId`)` | `Summoner` |
+| `SummonerV4`     | `ByName(Summoner_Name)` | `Summoner` |
+| `SummonerV4`     | `ByAccount(Encrypted_account_id)` | `Summoner` | 
+| `SummonerV4`     | `ByPuuid(Encrypted_Puuid)` | `Summoner` |
+| `SummonerV4` | `BySummoner(Encrypted_SummonerId)` | `Summoner` |
 
 <br>
 
