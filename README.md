@@ -25,7 +25,7 @@ MVP must be built with following assumptions:
 - Full open source
 - Easy insert any player to account's dictionary
 - Track player's games activity like game history, notifications about started games
-- Easy op.gg, professor.gg check
+- Easy op.gg, porofessor.gg check
 - Analyze each game progress like builds, runes, items etc.
 
 
@@ -41,23 +41,27 @@ To use api you have to create new Api instance
 ```cs
 Api instance = Api.GetInstance(<RIOT APP KEY>, <OneMinLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
-Just insert your api key from RIOT Developer portal https://developer.riotgames.com/
+Just insert your `api key` from RIOT Developer portal https://developer.riotgames.com/
 
-After registration your project is restricted by limited api rate limit. 
+After registration your project is restricted by limited `api rate limit`. 
 
-Just fill OneMinLimit and TwoMinLimit fields with your needs. 
+From project settings (look at riot developer portal -> app register) check your rate limits and put corresponding values to `OneMinLimit` and `TwoMinLimit` fields. 
 
-After that just fill ELocation enum which stands for game server.
+`ELocation` enum stands for game server.
 
-You can create request object with following statement
+<br>
+
+Create request object with following statement
 
 ```cs
 RiotRequest request = instance.SummonerV4.ByName("Rekurencja");
 ```
-SummonerV4 stands for endpoint and ByName is just method.
+`SummonerV4` stands for **endpoint** and **ByName** is just method.
 
 `RiotRequest` object is wrapped by your api key in headers. You can check it in `HeaderParameters` field (`GetHeaderParams method`).
 
-You can also check final HTTP link from `HttpAddress` field.
+You can also check final HTTP link from `HttpAddress` field.    
+<br>
+Full list of **endpoints** and **methods** is in `Work in progress` state 
 
 Rate limiter and request invoker classes are still in `Work in progress` state.
