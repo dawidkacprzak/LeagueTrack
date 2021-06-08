@@ -1,8 +1,7 @@
 ﻿using System;
-using API.Enum;
+using ApiWrapper.Enum;
 
-
-namespace API
+namespace ApiWrapper
 {
     /// <summary>
     /// Extenstion class for location enum

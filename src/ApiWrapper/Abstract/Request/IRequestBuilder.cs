@@ -1,4 +1,6 @@
-﻿namespace API.Abstract
+﻿using ApiWrapper.Abstract.Request;
+
+namespace ApiWrapper.Abstract
 {
     /// <summary>
     /// Builder pattern - used for request object creation

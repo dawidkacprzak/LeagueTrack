@@ -1,11 +1,13 @@
-﻿using API;
-using API.Enum;
-using API.Implementation;
+﻿using ApiWrapper;
+using ApiWrapper.Enum;
+using ApiWrapper.Implementation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using API.Abstract;
+using ApiWrapper.Abstract;
+using ApiWrapper.Abstract.Request;
+using ApiWrapper.Implementation.Request;
 using Test.Unit.Stub;
 
 namespace Test.Unit

@@ -1,4 +1,4 @@
-﻿namespace API.Enum
+﻿namespace ApiWrapper.Enum
 {
     /// <summary>
     /// Server location list

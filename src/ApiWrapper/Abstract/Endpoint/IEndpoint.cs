@@ -1,4 +1,4 @@
-﻿namespace API.Abstract
+﻿namespace ApiWrapper.Abstract.Endpoint
 {
     /// <summary>
     /// Interface for new endpoints

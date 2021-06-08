@@ -1,8 +1,8 @@
-﻿using API.Endpoints;
-using API.Enum;
+﻿using ApiWrapper.Endpoints;
+using ApiWrapper.Enum;
 
 
-namespace API
+namespace ApiWrapper
 {
     /// <summary>
     /// Base class for riot api invoke
@@ -24,7 +24,8 @@ namespace API
         /// <returns>New Api object</returns>
         public Api(string apiKey, int oneSecRateLimit, int twoMinRateLimit,ELocation location)
         {
-            SummonerV4 = new EndpointSummonerV4(apiKey,oneSecRateLimit,twoMinRateLimit,location);
+            //TODO FUTURE IMPLEMENTATION FOR API LIMITER (oneSecRateLimit, twoMinRateLimit)
+            SummonerV4 = new EndpointSummonerV4(apiKey,location);
         }
     }
 }

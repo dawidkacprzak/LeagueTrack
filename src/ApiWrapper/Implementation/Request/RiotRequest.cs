@@ -1,8 +1,8 @@
-﻿using API.Abstract;
-using System;
-using API.Enum;
+﻿using System;
+using ApiWrapper.Abstract.Request;
+using ApiWrapper.Enum;
 
-namespace API.Implementation
+namespace ApiWrapper.Implementation.Request
 {
     /// <summary>
     /// IRequest wrapper. Includes all needed fields for riot API.

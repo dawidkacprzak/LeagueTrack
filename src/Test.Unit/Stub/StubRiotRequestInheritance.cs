@@ -1,4 +1,4 @@
-﻿using API.Implementation;
+﻿using ApiWrapper.Implementation.Request;
 
 namespace Test.Unit.Stub
 {

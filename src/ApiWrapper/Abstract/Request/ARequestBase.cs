@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace API.Abstract
+namespace ApiWrapper.Abstract.Request
 {
     /// <summary>
     /// Base request class for request wrappers

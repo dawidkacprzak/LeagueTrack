@@ -1,8 +1,9 @@
-﻿using API.Abstract;
-using API.Implementation;
-using API.Enum;
+﻿using ApiWrapper.Abstract.Endpoint;
+using ApiWrapper.Abstract.Request;
+using ApiWrapper.Enum;
+using ApiWrapper.Implementation.Request;
 
-namespace API.Endpoints
+namespace ApiWrapper.Endpoints
 {
     /// <summary>
     /// https://developer.riotgames.com/apis#summoner-v4 implementation
@@ -11,22 +12,16 @@ namespace API.Endpoints
     {
         private readonly RequestDirector requestDirector = new RequestDirector();
         private readonly string apiKey;
-        private readonly int oneSecRequestRate;
-        private readonly int twoMinRequestRate;
         private readonly  ELocation location;
 
         /// <summary>
         /// Constructs new endpoint object
         /// </summary>
         /// <param name="apiKey">Prod/Dev riot api key</param>
-        /// <param name="oneSecRequestRate">One second api rate limit</param>
-        /// <param name="twoMinRequestRate">Two minute api rate limit</param>
         /// <param name="location">Location</param>
-        public EndpointSummonerV4(string apiKey, int oneSecRequestRate, int twoMinRequestRate, ELocation location)
+        public EndpointSummonerV4(string apiKey, ELocation location)
         {
             this.apiKey = apiKey;
-            this.oneSecRequestRate = oneSecRequestRate;
-            this.twoMinRequestRate = twoMinRequestRate;
             this.location = location;
         }
 

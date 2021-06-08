@@ -1,20 +1,21 @@
-﻿using API.Abstract;
-using API.Enum;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ApiWrapper.Abstract;
+using ApiWrapper.Abstract.Request;
+using ApiWrapper.Enum;
 
-namespace API.Implementation
+namespace ApiWrapper.Implementation.Request
 {
     /// <summary>
     /// Concrete builder pattern implementation for riot requests
     /// </summary>
     public class RiotRequestBuilder : IRequestBuilder
     {
-        private RiotRequest request = new RiotRequest();
-        ELocation location;
-        private string riotApiKey;
+        private readonly RiotRequest request = new RiotRequest();
+        private readonly ELocation location;
+        private readonly string riotApiKey;
         private string methodPath;
-        Dictionary<string, string> queryParameters = new Dictionary<string, string>();
-        Dictionary<string, string> headerParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> queryParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> headerParameters = new Dictionary<string, string>();
 
         /// <summary>
         /// Creates new builder object

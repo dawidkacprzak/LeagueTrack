@@ -1,7 +1,6 @@
-﻿using API.Abstract;
+﻿using ApiWrapper.Abstract;
 using System.Collections.Generic;
-
-namespace API
+namespace ApiWrapper
 {
     
     /// <summary>
