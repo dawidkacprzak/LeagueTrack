@@ -1,4 +1,5 @@
 ﻿using API;
+using API.Enum;
 using API.Implementation;
 using NUnit.Framework;
 using System;
@@ -91,9 +92,14 @@ namespace Test.Unit
             Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest requestByName = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount("Rekurencja");
+            RiotRequest requestByPuuid = (RiotRequest) instance.SummonerV4.ByPuuid("Rekurencja");
+            RiotRequest requestBySummoner = (RiotRequest) instance.SummonerV4.BySummoner("Rekurencja");
+
 
             Assert.IsTrue(requestByName.GetHeaderParams().ContainsKey("X-Riot-Token"));
             Assert.IsTrue(requestByAccount.GetHeaderParams().ContainsKey("X-Riot-Token"));
+            Assert.IsTrue(requestByPuuid.GetHeaderParams().ContainsKey("X-Riot-Token"));
+            Assert.IsTrue(requestBySummoner.GetHeaderParams().ContainsKey("X-Riot-Token"));
         }
 
         [Test]
@@ -110,9 +116,27 @@ namespace Test.Unit
         public void API_Endpoint_SummonerV4_ByAccount_CorrectHttpPath()
         {
             Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
-            RiotRequest request = (RiotRequest) instance.SummonerV4.ByAccount("testid");
+            RiotRequest request = (RiotRequest) instance.SummonerV4.ByAccount("encryptedAccountId");
             Assert.AreEqual(request.HttpAddress,
-                "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-account/testid");
+                "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-account/encryptedAccountId");
+            Assert.IsNotNull(request.HttpAddress);
+        }
+        [Test]
+        public void API_Endpoint_SummonerV4_ByPuuid_CorrectHttpPath()
+        {
+            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            RiotRequest request = (RiotRequest) instance.SummonerV4.ByPuuid("encryptedPUUID");
+            Assert.AreEqual(request.HttpAddress,
+                "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/encryptedPUUID");
+            Assert.IsNotNull(request.HttpAddress);
+        }
+        [Test]
+        public void API_Endpoint_SummonerV4_BySummoner_CorrectHttpPath()
+        {
+            Api instance = Api.GetInstance(TestKey, limit1Min, limit2Min, ELocation.EUNE);
+            RiotRequest request = (RiotRequest) instance.SummonerV4.BySummoner("encryptedSummonerId");
+            Assert.AreEqual(request.HttpAddress,
+                "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/encryptedSummonerId");
             Assert.IsNotNull(request.HttpAddress);
         }
     }

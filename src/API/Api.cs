@@ -1,6 +1,6 @@
-﻿using API.Abstract;
-using API.Endpoints;
-using System;
+﻿using API.Endpoints;
+using API.Enum;
+
 
 namespace API
 {
@@ -9,18 +9,18 @@ namespace API
         private static Api _api;
         public EndpointSummonerV4 SummonerV4;
 
-        public static Api GetInstance(string apiKey, int oneMinRateLimit, int twoMinRateLimit, ELocation location)
+        public static Api GetInstance(string apiKey, int oneSecRateLimit, int twoMinRateLimit, ELocation location)
         {
             if(_api == null)
             {
-                _api = new Api(apiKey, oneMinRateLimit,twoMinRateLimit, location);
+                _api = new Api(apiKey, oneSecRateLimit,twoMinRateLimit, location);
             }
             return _api;
         }
 
-        private Api(string apiKey, int oneMinRateLimit, int twoMinRateLimit,ELocation location)
+        private Api(string apiKey, int oneSecRateLimit, int twoMinRateLimit,ELocation location)
         {
-            SummonerV4 = new EndpointSummonerV4(apiKey,oneMinRateLimit,twoMinRateLimit,location);
+            SummonerV4 = new EndpointSummonerV4(apiKey,oneSecRateLimit,twoMinRateLimit,location);
         }
     }
 }

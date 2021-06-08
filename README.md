@@ -39,13 +39,13 @@ All parts of this project are allowed to re-use for your own - including modific
 
 To use api you have to create new Api instance
 ```cs
-Api instance = Api.GetInstance(<RIOT APP KEY>, <OneMinLimit>, <TwoMinLimit>, ELocation.EUNE);
+Api instance = Api.GetInstance(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
 Just insert your `api key` from RIOT Developer portal https://developer.riotgames.com/
 
 After registration your project is restricted by limited `api rate limit`. 
 
-From project settings (look at riot developer portal -> app register) check your rate limits and put corresponding values to `OneMinLimit` and `TwoMinLimit` fields. 
+From project settings (look at riot developer portal -> app register) check your rate limits and put corresponding values to `OneSecLimit` and `TwoMinLimit` fields. 
 
 `ELocation` enum stands for game server.
 

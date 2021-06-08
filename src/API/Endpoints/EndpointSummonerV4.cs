@@ -1,25 +1,21 @@
 ﻿using API.Abstract;
 using API.Implementation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using API.Enum;
 
 namespace API.Endpoints
 {
     public class EndpointSummonerV4 : IEndpoint
     {
-        private RequestDirector requestDirector = new RequestDirector();
-        private string apiKey;
-        private int oneMinRequestRate;
-        private int twoMinRequestRate;
-        private ELocation location;
+        private readonly RequestDirector requestDirector = new RequestDirector();
+        private readonly string apiKey;
+        private readonly int oneSecRequestRate;
+        private readonly int twoMinRequestRate;
+        private readonly  ELocation location;
 
-        public EndpointSummonerV4(string apiKey, int oneMinRequestRate, int twoMinRequestRate, ELocation location)
+        public EndpointSummonerV4(string apiKey, int oneSecRequestRate, int twoMinRequestRate, ELocation location)
         {
             this.apiKey = apiKey;
-            this.oneMinRequestRate = oneMinRequestRate;
+            this.oneSecRequestRate = oneSecRequestRate;
             this.twoMinRequestRate = twoMinRequestRate;
             this.location = location;
         }
@@ -36,7 +32,7 @@ namespace API.Endpoints
         /// <param name="summonerName">Summoner name</param>
         public IRequest ByName(string summonerName)
         {
-            requestDirector.builder = new RiotRequestBuilder(apiKey, oneMinRequestRate, twoMinRequestRate, location);
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneSecRequestRate, twoMinRequestRate, location);
             requestDirector.Construct($"{GetEndpointPath()}/summoners/by-name/{summonerName}");
             return requestDirector.builder.GetRequest();
         }
@@ -47,8 +43,28 @@ namespace API.Endpoints
         /// <param name="encryptedAccountId">Encrypted account id</param>
         public IRequest ByAccount(string encryptedAccountId)
         {
-            requestDirector.builder = new RiotRequestBuilder(apiKey, oneMinRequestRate, twoMinRequestRate, location);
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneSecRequestRate, twoMinRequestRate, location);
             requestDirector.Construct($"{GetEndpointPath()}/summoners/by-account/{encryptedAccountId}");
+            return requestDirector.builder.GetRequest();
+        }
+        /// <summary>
+        /// Create request for fetching summoner info by account id
+        /// </summary>
+        /// <param name="encryptedPuuid">Encrypted account id</param>
+        public IRequest ByPuuid(string encryptedPuuid)
+        {
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneSecRequestRate, twoMinRequestRate, location);
+            requestDirector.Construct($"{GetEndpointPath()}/summoners/by-puuid/{encryptedPuuid}");
+            return requestDirector.builder.GetRequest();
+        }
+        /// <summary>
+        /// Create request for fetching summoner info by account id
+        /// </summary>
+        /// <param name="encryptedSummonerId">Encrypted account id</param>
+        public IRequest BySummoner(string encryptedSummonerId)
+        {
+            requestDirector.builder = new RiotRequestBuilder(apiKey, oneSecRequestRate, twoMinRequestRate, location);
+            requestDirector.Construct($"{GetEndpointPath()}/summoners/{encryptedSummonerId}");
             return requestDirector.builder.GetRequest();
         }
 

@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace API.Abstract
 {
     public abstract class ARequestBase : IRequest
     {
-        protected Dictionary<string, string> QueryParameters;
-        protected Dictionary<string, string> HeaderParameters;
+        private Dictionary<string, string> queryParameters;
+        private Dictionary<string, string> headerParameters;
         public virtual string HttpAddress { get; protected set; }
         public virtual string MethodPath { get; protected set; }
         public ARequestBase()
         {
-            QueryParameters = new Dictionary<string, string>();
-            HeaderParameters = new Dictionary<string, string>();
+            queryParameters = new Dictionary<string, string>();
+            headerParameters = new Dictionary<string, string>();
         }
 
         public virtual Dictionary<string, string> GetHeaderParams()
         {
-            return HeaderParameters;
+            return headerParameters;
         }
 
         public virtual Dictionary<string, string> GetQueryParams()
         {
-            return QueryParameters;
+            return queryParameters;
         }
 
         public virtual void SetHeaderParams(Dictionary<string, string> parameters)
         {
-            this.HeaderParameters = parameters;
+            this.headerParameters = parameters;
         }
 
         public virtual void SetHttpAddress(string httpAddress)
@@ -40,7 +36,7 @@ namespace API.Abstract
 
         public virtual void SetQueryParams(Dictionary<string, string> parameters)
         {
-            this.QueryParameters = parameters;
+            this.queryParameters = parameters;
         }
 
         public virtual void SetMethodPath(string methodPath)
