@@ -34,7 +34,7 @@ namespace ApiWrapper.Implementation.RequestSender
             
             try
             {
-                 response = await client.GetAsync(request.GetHttpAddress());
+                 response = await client.GetAsync(request.GetHttpAddress()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

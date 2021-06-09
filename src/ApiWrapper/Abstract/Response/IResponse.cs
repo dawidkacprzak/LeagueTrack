@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace ApiWrapper.Abstract.Response
 {
@@ -23,7 +24,14 @@ namespace ApiWrapper.Abstract.Response
         /// Returns response message as string
         /// </summary>
         /// <returns></returns>
+        public Task<string> GetResponseContentAsync();
+
+        /// <summary>
+        /// Returns response message as string
+        /// </summary>
+        /// <returns></returns>
         public string GetResponseContent();
+
         /// <summary>
         /// Returns message if occurred
         /// </summary>

@@ -67,11 +67,11 @@ namespace Test.Integration.ApiWrapper
 
 
         [Test]
-        public void Check_Get_By_Name_Method_Serializable_Model()
+        public async Task Check_Get_By_Name_Method_Serializable_Model()
         {
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             RiotResponse response = (RiotResponse) requestSender.GetAsync(request).Result;
-            Summoner summoner = JsonConvert.DeserializeObject<Summoner>(response.GetResponseContent());
+            Summoner summoner = JsonConvert.DeserializeObject<Summoner>(await response.GetResponseContentAsync());
             Assert.IsNotNull(summoner.id);
             Assert.IsNotNull(summoner.name);
             Assert.IsNotNull(summoner.puuid);
@@ -82,11 +82,11 @@ namespace Test.Integration.ApiWrapper
         }
 
         [Test]
-        public void Check_SummonerV4_Methods_Integration()
+        public async Task Check_SummonerV4_Methods_Integration()
         {
             RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
             RiotResponse response = (RiotResponse) requestSender.GetAsync(request).Result;
-            Summoner summoner = JsonConvert.DeserializeObject<Summoner>(response.GetResponseContent());
+            Summoner summoner = JsonConvert.DeserializeObject<Summoner>(await response.GetResponseContentAsync());
             RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount(summoner.accountId);
             RiotRequest requestByPuuid = (RiotRequest) instance.SummonerV4.ByPuuid(summoner.puuid);
             RiotRequest requestBySummoner = (RiotRequest) instance.SummonerV4.BySummoner(summoner.id);
@@ -96,30 +96,53 @@ namespace Test.Integration.ApiWrapper
             RiotResponse responseBySummoner = (RiotResponse) requestSender.GetAsync(requestBySummoner).Result;
 
             Summoner summonerByAccount =
-                JsonConvert.DeserializeObject<Summoner>(responseByAccount.GetResponseContent());
-            Summoner summonerByPuuid = JsonConvert.DeserializeObject<Summoner>(responseByPuuid.GetResponseContent());
+                JsonConvert.DeserializeObject<Summoner>(await responseByAccount.GetResponseContentAsync());
+            Summoner summonerByPuuid = JsonConvert.DeserializeObject<Summoner>(await responseByPuuid.GetResponseContentAsync());
             Summoner summonerBySummoner =
-                JsonConvert.DeserializeObject<Summoner>(responseBySummoner.GetResponseContent());
+                JsonConvert.DeserializeObject<Summoner>(await responseBySummoner.GetResponseContentAsync());
 
             Assert.IsTrue(summoner.Equals(summonerByAccount) && summoner.Equals(summonerByPuuid) &&
                           summoner.Equals(summonerBySummoner));
         }
 
         [Test]
+        public void Check_SummonerV4_Does_Not_Throw_Exception_When_Fail_From_Bad_Parameter_Async()
+        {
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                RiotRequest request = (RiotRequest)instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
+                RiotResponse response = (RiotResponse)requestSender.GetAsync(request).Result;
+                Summoner summoner = JsonConvert.DeserializeObject<Summoner>(await response.GetResponseContentAsync());
+                RiotRequest requestByAccount = (RiotRequest)instance.SummonerV4.ByAccount(summoner.accountId);
+                RiotRequest requestByPuuid = (RiotRequest)instance.SummonerV4.ByPuuid(summoner.puuid);
+                RiotRequest requestBySummoner = (RiotRequest)instance.SummonerV4.BySummoner(summoner.id);
+
+                RiotResponse responseByAccount = (RiotResponse)requestSender.GetAsync(requestByAccount).Result;
+                RiotResponse responseByPuuid = (RiotResponse)requestSender.GetAsync(requestByPuuid).Result;
+                RiotResponse responseBySummoner = (RiotResponse)requestSender.GetAsync(requestBySummoner).Result;
+                Assert.IsNull(responseByAccount.GetThrownException());
+                Assert.IsNull(responseByPuuid.GetThrownException());
+                Assert.IsNull(responseBySummoner.GetThrownException());
+                Assert.IsNull(response.GetThrownException());
+            });
+        }
+
+
+        [Test]
         public void Check_SummonerV4_Does_Not_Throw_Exception_When_Fail_From_Bad_Parameter()
         {
             Assert.DoesNotThrow(() =>
             {
-                RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
-                RiotResponse response = (RiotResponse) requestSender.GetAsync(request).Result;
+                RiotRequest request = (RiotRequest)instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
+                RiotResponse response = (RiotResponse)requestSender.GetAsync(request).Result;
                 Summoner summoner = JsonConvert.DeserializeObject<Summoner>(response.GetResponseContent());
-                RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount(summoner.accountId);
-                RiotRequest requestByPuuid = (RiotRequest) instance.SummonerV4.ByPuuid(summoner.puuid);
-                RiotRequest requestBySummoner = (RiotRequest) instance.SummonerV4.BySummoner(summoner.id);
+                RiotRequest requestByAccount = (RiotRequest)instance.SummonerV4.ByAccount(summoner.accountId);
+                RiotRequest requestByPuuid = (RiotRequest)instance.SummonerV4.ByPuuid(summoner.puuid);
+                RiotRequest requestBySummoner = (RiotRequest)instance.SummonerV4.BySummoner(summoner.id);
 
-                RiotResponse responseByAccount = (RiotResponse) requestSender.GetAsync(requestByAccount).Result;
-                RiotResponse responseByPuuid = (RiotResponse) requestSender.GetAsync(requestByPuuid).Result;
-                RiotResponse responseBySummoner = (RiotResponse) requestSender.GetAsync(requestBySummoner).Result;
+                RiotResponse responseByAccount = (RiotResponse)requestSender.GetAsync(requestByAccount).Result;
+                RiotResponse responseByPuuid = (RiotResponse)requestSender.GetAsync(requestByPuuid).Result;
+                RiotResponse responseBySummoner = (RiotResponse)requestSender.GetAsync(requestBySummoner).Result;
                 Assert.IsNull(responseByAccount.GetThrownException());
                 Assert.IsNull(responseByPuuid.GetThrownException());
                 Assert.IsNull(responseBySummoner.GetThrownException());

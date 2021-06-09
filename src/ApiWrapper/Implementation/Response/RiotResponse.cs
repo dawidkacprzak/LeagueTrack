@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using ApiWrapper.Abstract.Response;
 
 namespace ApiWrapper.Implementation.Response
@@ -11,7 +12,7 @@ namespace ApiWrapper.Implementation.Response
     {
         private bool success;
         private Exception thrownException;
-        private string responseContent;
+        private Task<string> responseContent;
         private string message;
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace ApiWrapper.Implementation.Response
             if (message != null)
             {
                 success = message.IsSuccessStatusCode;
-                responseContent = message.Content.ReadAsStringAsync().Result;
+                responseContent = message.Content.ReadAsStringAsync();
             }
             else
             {
@@ -57,9 +58,18 @@ namespace ApiWrapper.Implementation.Response
         /// Retrieves string response content
         /// </summary>
         /// <returns></returns>
+        public async Task<string> GetResponseContentAsync()
+        {
+            return await responseContent.ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves string response content
+        /// </summary>
+        /// <returns></returns>
         public string GetResponseContent()
         {
-            return responseContent;
+            return responseContent.GetAwaiter().GetResult();
         }
 
         /// <summary>
