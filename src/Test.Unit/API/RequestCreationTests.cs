@@ -67,11 +67,20 @@ namespace Test.Unit
         [Test]
         public void ELocation_To_Name_Correct()
         {
-            Assert.AreEqual(ELocation.EUNE.ToTextName(), "eun1");
             Assert.AreEqual(ELocation.NoInfo.ToTextName(), "");
+            Assert.AreEqual(ELocation.EUNE.ToTextName(), "eun1");
+            Assert.AreEqual(ELocation.JP.ToTextName(), "jp1");
+            Assert.AreEqual(ELocation.OC.ToTextName(), "oc1");
+            Assert.AreEqual(ELocation.KR.ToTextName(), "kr");
+            Assert.AreEqual(ELocation.LA1.ToTextName(), "la1");
+            Assert.AreEqual(ELocation.LA2.ToTextName(), "la2");
+            Assert.AreEqual(ELocation.NA.ToTextName(), "na1");
+            Assert.AreEqual(ELocation.RU.ToTextName(), "ru");
+            Assert.AreEqual(ELocation.TR.ToTextName(), "tr1");
+            Assert.AreEqual(ELocation.EUW.ToTextName(), "euw1");
             Assert.Throws<NotImplementedException>(() => ((ELocation) (-3)).ToTextName());
             int eLocationCount = Enum.GetNames(typeof(ELocation)).Length;
-            Assert.AreEqual(eLocationCount, 2); //Just to don't forget about insert and CHECK next locations. 
+            Assert.AreEqual(eLocationCount, 11); //Just to don't forget about insert and CHECK next locations. 
         }
 
         [Test]

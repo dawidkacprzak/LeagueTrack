@@ -23,6 +23,24 @@ namespace ApiWrapper
                     return "";
                 case ELocation.EUNE:
                     return "eun1";
+                case ELocation.EUW:
+                    return "euw1";
+                case ELocation.JP:
+                    return "jp1";
+                case ELocation.OC:
+                    return "oc1";
+                case ELocation.KR:
+                    return "kr";
+                case ELocation.LA1:
+                    return "la1";
+                case ELocation.LA2:
+                    return "la2";
+                case ELocation.NA:
+                    return "na1";
+                case ELocation.RU:
+                    return "ru";
+                case ELocation.TR:
+                    return "tr1";
                 default: throw new NotImplementedException();
             }
         }

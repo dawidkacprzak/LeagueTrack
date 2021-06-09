@@ -13,6 +13,51 @@
         /// <summary>
         /// Europe nordic east
         /// </summary>
-        EUNE = 1
+        EUNE = 1,
+
+        /// <summary>
+        /// Europe west
+        /// </summary>
+        EUW = 2,
+
+        /// <summary>
+        /// Japan
+        /// </summary>
+        JP = 3,
+
+        /// <summary>
+        /// Korea
+        /// </summary>
+        KR = 4,
+
+        /// <summary>
+        /// Latin America North
+        /// </summary>
+        LA1 = 5,
+
+        /// <summary>
+        /// Latin America South
+        /// </summary>
+        LA2 = 6,
+
+        /// <summary>
+        /// North America
+        /// </summary>
+        NA = 7,
+
+        /// <summary>
+        /// Oceania
+        /// </summary>
+        OC = 8,
+
+        /// <summary>
+        /// Russia
+        /// </summary>
+        RU = 9,
+
+        /// <summary>
+        /// Turkey
+        /// </summary>
+        TR = 10
     }
 }
