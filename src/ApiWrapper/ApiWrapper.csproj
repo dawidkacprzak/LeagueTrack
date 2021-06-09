@@ -24,6 +24,14 @@ https://github.com/dawidkacprzak/LeagueTrack</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="gpl-2.0.txt" />
+    <None Include="..\..\gpl-2.0.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\gpl-2.0.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
