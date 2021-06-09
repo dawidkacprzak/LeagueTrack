@@ -62,6 +62,10 @@ namespace ApiWrapper.Implementation.Response
             return responseContent;
         }
 
+        /// <summary>
+        /// Retrieves exception message if occured
+        /// </summary>
+        /// <returns></returns>
         public string GetMessage()
         {
             return message;
