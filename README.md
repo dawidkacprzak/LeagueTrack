@@ -1,5 +1,8 @@
 # LeagueTrack
+[![Build status](https://ci.appveyor.com/api/projects/status/1cwqfwrd5y7vt85q/branch/master?svg=true)](https://ci.appveyor.com/project/dawidkacprzak/leaguetrack/branch/master)
+
 C# Based platform for tracking players.
+
 
 ✔️ - Done
 ⚙️ - WIP
