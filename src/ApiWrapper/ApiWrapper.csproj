@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>LeagueTrack.ApiWrapper</PackageId>
+    <Title>LeagueTrack ApiWrapper</Title>
+    <Authors>dawidkacprzak</Authors>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/dawidkacprzak/LeagueTrack/tree/master/src/ApiWrapper</RepositoryUrl>
+    <PackageLicenseFile>gpl-2.0.txt</PackageLicenseFile>
+    <Description>League of Legends api wrapper created for 'LeagueTrack' needs. There isn't much implemented endpoints.
+New will be added only if LeagueTrack project need a new one.
+If you need more endpoints/methods you can open a issue or (i prefer) Collaborate by pull request on github.
+https://github.com/dawidkacprzak/LeagueTrack</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -11,5 +22,12 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\ApiWrapper.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\gpl-2.0.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

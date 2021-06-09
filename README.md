@@ -38,9 +38,11 @@ All parts of this project are allowed to re-use for your own - including modific
 
 
 ---
-## API Example
+## API Wrapper Example
 
-To use api you have to create new Api instance
+[![NuGet version](https://badge.fury.io/nu/LeagueTrack.ApiWrapper.svg)](https://badge.fury.io/nu/LeagueTrack.ApiWrapper)
+
+To use api wrapper you have to create new Api instance
 ```cs
 Api instance = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
