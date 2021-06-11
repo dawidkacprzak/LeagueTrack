@@ -1,7 +1,9 @@
 # LeagueTrack
+
 [![Build status](https://ci.appveyor.com/api/projects/status/1cwqfwrd5y7vt85q/branch/master?svg=true)](https://ci.appveyor.com/project/dawidkacprzak/leaguetrack/branch/master)
 
-C# Based platform for tracking players.
+C# Based platform for tracking players.  
+ [GPL 3.0 License](LICENSE)  
 
 
 ✔️ - Done
@@ -31,8 +33,6 @@ MVP must be built with following assumptions:
 - Easy op.gg, porofessor.gg check
 - Analyze each game progress like builds, runes, items etc.
 
-
-All parts of this project are allowed to re-use for your own - including modifications, distribution, private and commercial use.
 
 `Collaborate.`
 

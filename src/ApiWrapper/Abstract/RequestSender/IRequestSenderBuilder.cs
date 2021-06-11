@@ -1,4 +1,9 @@
-﻿namespace ApiWrapper.Abstract.RequestSender
+﻿/*
+* Copyright (C) 2021 Dawid Kacprzak, Oyacode
+* License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
+* Author: Dawid Kacprzak https://github.com/dawidkacprzak 
+*/
+namespace ApiWrapper.Abstract.RequestSender
 {
     /// <summary>
     /// Request sender interface - base for concrete request sender builder pattern
