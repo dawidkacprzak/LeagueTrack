@@ -12,8 +12,8 @@ C# Based platform for tracking players.
 | Feature        | Status       |
 | ------------- |:-------------:| 
 | Riot API Wrapper     | ✔️ | 
-| Riot API Wrapper rate limiter     | ⚙️ | 
-| Rest API     | ❌ |
+| Riot API Wrapper rate limiter     | ✔️ | 
+| Rest API     | ⚙️ |
 | Mobile application | ❌ |
 | Web application | ❌ |
 | Desktop application | ❌ |
@@ -111,7 +111,18 @@ Summoner summoner = JsonConvert.DeserializeObject<Summoner>(getSummonerByNameRes
 >If you need more endpoints/methods you can open a issue or (i prefer) `Collaborate by pull request`
 
 
-**Rate limiter is still in `Work in progress` state.**
+### Rate limiter
+Currently rate limiter is built on `RiotSingletonRequestLimiter` class
+
+Limit per second / per 2 minutes is defined by `Api` object contructor.
+```cs
+Api api = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
+```
+Current implementation is very simple. `IRequestSender` will wait some time if 1 sec/2 min limit is exceeded.
+
+Also Riot api is using `Retry-After` header if `Method-Rate-Limit` is exceeded limiter will try to retry request **ONCE** when `Too Many Requests` status code occurred after delay presented in `Retry-After` header. 
+
+`RiotSingletonRequestLimiter` is singleton so configuration change will occur on all usages.
 
 ---
 

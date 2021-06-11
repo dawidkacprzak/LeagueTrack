@@ -40,6 +40,7 @@ namespace ApiWrapper.Implementation.Request
         /// </summary>
         /// <param name="apiKey">prod/dev riot api key</param>
         /// <param name="location">Location</param>
+        /// <param name="requestType">Request type</param>
         public RiotRequestBuilder(string apiKey, ELocation location, ERiotRequest requestType)
         {
             this.riotApiKey = apiKey;

@@ -19,6 +19,9 @@ namespace ApiWrapper.Implementation.RequestLimiter
     /// </summary>
     public sealed class RiotSingletonRequestLimiter : IRequestLimiter<ERiotRequest>
     {
+        /// <summary>
+        /// List of last requests
+        /// </summary>
         public ConcurrentBag<AbsoluteRequest> AbsoluteRequests = new ConcurrentBag<AbsoluteRequest>();
 
         /// <summary>
@@ -61,7 +64,11 @@ namespace ApiWrapper.Implementation.RequestLimiter
                 throw new Exception("Cannot limit request if configuration is not specified");
 
             await Task.Delay(CheckAbsoluteRateLimit(DateTime.Now)).ConfigureAwait(false);
-            AbsoluteRequests.Add(new AbsoluteRequest(DateTime.Now));
+            AbsoluteRequests = new ConcurrentBag<AbsoluteRequest>(AbsoluteRequests
+                .Where(x => x.RequestDate >= DateTime.Now.Subtract(new TimeSpan(0, 3, 0))))
+            {
+                new AbsoluteRequest(DateTime.Now)
+            };
         }
 
 
@@ -103,10 +110,20 @@ namespace ApiWrapper.Implementation.RequestLimiter
             }
         }
 
+        /// <summary>
+        /// Simple DateTime wrapper
+        /// </summary>
         public struct AbsoluteRequest
         {
+            /// <summary>
+            /// DateTime store
+            /// </summary>
             public DateTime RequestDate;
 
+            /// <summary>
+            /// DateTime wrapper constructor
+            /// </summary>
+            /// <param name="requestDate">DateTime to store</param>
             public AbsoluteRequest(DateTime requestDate)
             {
                 RequestDate = requestDate;
