@@ -14,13 +14,14 @@ namespace ApiWrapper.Implementation.RequestSender
     /// </summary>
     public class RiotRequestSenderBuilder : IRequestSenderBuilder
     {
-        private readonly RiotRequestSender sender = new RiotRequestSender();
+        private RiotRequestSender sender;
 
         /// <summary>
         /// Builds new Riot request sender
         /// </summary>
         public void BuildRequestSender()
         {
+            sender = new RiotRequestSender(null);
         }
 
         /// <summary>
