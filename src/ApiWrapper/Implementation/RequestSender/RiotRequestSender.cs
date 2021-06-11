@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ApiWrapper.Abstract.Request;
+using ApiWrapper.Abstract.RequestLimiter;
 using ApiWrapper.Abstract.RequestSender;
 using ApiWrapper.Abstract.Response;
 using ApiWrapper.Implementation.Response;
@@ -14,6 +15,11 @@ namespace ApiWrapper.Implementation.RequestSender
     /// </summary>
     public class RiotRequestSender : IRequestSender
     {
+        public RiotRequestSender(IRequestLimiter limiter)
+        {
+            
+        }
+        
         /// <summary>
         /// Riot GET method implementation
         /// </summary>
