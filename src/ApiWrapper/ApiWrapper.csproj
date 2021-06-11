@@ -10,7 +10,7 @@
 New will be added only if LeagueTrack project need a new one.
 If you need more endpoints/methods you can open a issue or (i prefer) Collaborate by pull request on github.
 https://github.com/dawidkacprzak/LeagueTrack</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <TargetFrameworks>net5.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 

@@ -118,7 +118,7 @@ Limit per second / per 2 minutes is defined by `Api` object contructor.
 ```cs
 Api api = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
-Current implementation is very simple. `IRequestSender` will wait some time if 1 sec/2 min limit is exceeded.
+Current implementation is very simple. `RiotRequestSender` will wait some time if 1 sec/2 min limit is exceeded.
 
 Also Riot api is using `Retry-After` header if `Method-Rate-Limit` is exceeded limiter will try to retry request **ONCE** when `Too Many Requests` status code occurred after delay presented in `Retry-After` header. 
 
