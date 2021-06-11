@@ -3,6 +3,7 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
 using System.Collections.Generic;
 using ApiWrapper.Abstract;
 using ApiWrapper.Abstract.Request;
@@ -21,6 +22,7 @@ namespace ApiWrapper.Implementation.Request
         private string methodPath;
         private readonly Dictionary<string, string> queryParameters = new Dictionary<string, string>();
         private readonly Dictionary<string, string> headerParameters = new Dictionary<string, string>();
+        private readonly ERiotRequest riotRequestType = ERiotRequest.NoInfo;
 
         /// <summary>
         /// Creates new builder object
@@ -34,6 +36,18 @@ namespace ApiWrapper.Implementation.Request
         }
 
         /// <summary>
+        /// Creates new builder object
+        /// </summary>
+        /// <param name="apiKey">prod/dev riot api key</param>
+        /// <param name="location">Location</param>
+        public RiotRequestBuilder(string apiKey, ELocation location, ERiotRequest requestType)
+        {
+            this.riotApiKey = apiKey;
+            this.location = location;
+            riotRequestType = requestType;
+        }
+
+        /// <summary>
         /// Add new header parameter for all built requests
         /// </summary>
         /// <param name="key">Parameter name</param>
@@ -42,6 +56,7 @@ namespace ApiWrapper.Implementation.Request
         {
             headerParameters.Add(key, value);
         }
+
         /// <summary>
         /// Add new query parameter for all built requests
         /// </summary>
@@ -64,6 +79,7 @@ namespace ApiWrapper.Implementation.Request
             request.SetQueryParams(this.queryParameters);
             request.SetLocation(this.location);
             request.SetMethodPath(this.methodPath);
+            request.RiotRequestType = riotRequestType;
         }
 
         /// <summary>

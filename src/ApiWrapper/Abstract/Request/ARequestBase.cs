@@ -3,6 +3,8 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
+using System;
 using System.Collections.Generic;
 
 namespace ApiWrapper.Abstract.Request

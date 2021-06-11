@@ -3,9 +3,8 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
-using ApiWrapper.Abstract.Request;
 
-namespace ApiWrapper.Abstract
+namespace ApiWrapper.Abstract.Request
 {
     /// <summary>
     /// Builder pattern - used for request object creation

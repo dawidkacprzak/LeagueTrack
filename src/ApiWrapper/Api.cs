@@ -5,6 +5,7 @@
 */
 using ApiWrapper.Endpoints;
 using ApiWrapper.Enum;
+using ApiWrapper.Implementation.RequestLimiter;
 
 
 namespace ApiWrapper
@@ -29,7 +30,8 @@ namespace ApiWrapper
         /// <returns>New Api object</returns>
         public Api(string apiKey, int oneSecRateLimit, int twoMinRateLimit,ELocation location)
         {
-            //TODO FUTURE IMPLEMENTATION FOR API LIMITER (oneSecRateLimit, twoMinRateLimit)
+            RiotSingletonRequestLimiter.Instance.AbsoluteOneSecRateLimit = oneSecRateLimit;
+            RiotSingletonRequestLimiter.Instance.AbsoluteTwoMinRateLimit = twoMinRateLimit;
             SummonerV4 = new EndpointSummonerV4(apiKey,location);
         }
     }

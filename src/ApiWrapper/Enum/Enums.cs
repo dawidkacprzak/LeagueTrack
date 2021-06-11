@@ -3,6 +3,7 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
 namespace ApiWrapper.Enum
 {
     /// <summary>
@@ -64,5 +65,36 @@ namespace ApiWrapper.Enum
         /// Turkey
         /// </summary>
         TR = 10
+    }
+
+    /// <summary>
+    /// Listing of available riot request types
+    /// </summary>
+    public enum ERiotRequest
+    {
+        /// <summary>
+        /// No information
+        /// </summary>
+        NoInfo = 0,
+
+        /// <summary>
+        /// Endpoint SummonerV4 - ByAccount method
+        /// </summary>
+        SummonerV4ByAccount = 1,
+
+        /// <summary>
+        /// Endpoint SummonerV4 - ByName method
+        /// </summary>
+        SummonerV4ByName = 2,
+
+        /// <summary>
+        /// Endpoint SummonerV4 - ByPuuid method
+        /// </summary>
+        SummonerV4ByPuuid = 3,
+
+        /// <summary>
+        /// Endpoint SummonerV4 - BySummoner method
+        /// </summary>
+        SummonerV4BySummoner = 4
     }
 }

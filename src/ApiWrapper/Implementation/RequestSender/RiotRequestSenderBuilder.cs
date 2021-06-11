@@ -11,6 +11,7 @@ using ApiWrapper.Abstract;
 using ApiWrapper.Abstract.Request;
 using ApiWrapper.Abstract.RequestSender;
 using ApiWrapper.Implementation.Request;
+using ApiWrapper.Implementation.RequestLimiter;
 
 namespace ApiWrapper.Implementation.RequestSender
 {
@@ -26,7 +27,7 @@ namespace ApiWrapper.Implementation.RequestSender
         /// </summary>
         public void BuildRequestSender()
         {
-            sender = new RiotRequestSender(null);
+            sender = new RiotRequestSender(RiotSingletonRequestLimiter.Instance);
         }
 
         /// <summary>
