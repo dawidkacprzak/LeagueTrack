@@ -95,7 +95,7 @@ namespace ApiWrapper.Implementation.RequestLimiter
                 ConcurrentBag<AbsoluteRequest> current2MinRequests = new ConcurrentBag<AbsoluteRequest>(AbsoluteRequests
                     .Where(x => x.RequestDate >= twoMinDateCheck
                     ).AsEnumerable());
-                
+
 
                 if (current2MinRequests.Count() > AbsoluteTwoMinRateLimit)
                 {

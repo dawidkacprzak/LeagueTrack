@@ -80,7 +80,7 @@ Creation process is done by builder pattern using `RequestSenderDirector` class.
 ```cs
 Api api = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 RequestSenderDirector director = new RequestSenderDirector();
-director.builder = new RiotRequestSenderBuilder();
+director.builder = new RiotRequestSenderBuilder(<optional retry count>);
 director.Construct();
 IRequestSender sender = director.builder.GetRequestSender(); 
 //Constructed IRequestSender can be used multiple times. You dont have to contruct it every request
@@ -114,15 +114,24 @@ Summoner summoner = JsonConvert.DeserializeObject<Summoner>(getSummonerByNameRes
 ### Rate limiter
 Currently rate limiter is built on `RiotSingletonRequestLimiter` class
 
+`RiotSingletonRequestLimiter` is singleton so configuration change will occur on all usages.
+
 Limit per second / per 2 minutes is defined by `Api` object contructor.
 ```cs
 Api api = new Api(<RIOT APP KEY>, <OneSecLimit>, <TwoMinLimit>, ELocation.EUNE);
 ```
 Current implementation is very simple. `RiotRequestSender` will wait some time if 1 sec/2 min limit is exceeded.
 
-Also Riot api is using `Retry-After` header if `Method-Rate-Limit` is exceeded limiter will try to retry request **ONCE** when `Too Many Requests` status code occurred after delay presented in `Retry-After` header. 
 
-`RiotSingletonRequestLimiter` is singleton so configuration change will occur on all usages.
+
+Also Riot api is using `Retry-After` header if `Method-Rate-Limit` is exceeded, limiter will try to retry request **three times** when `any error` status code occurred after delay presented in `Retry-After` header. 
+
+
+You can change default retry count by modify constructor of `RiotRequestSenderBuilder` with specified parameter:
+```cs
+new RiotRequestSenderBuilder(<optional retry count>);
+```
+
 
 ---
 

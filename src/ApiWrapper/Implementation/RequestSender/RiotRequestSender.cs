@@ -27,14 +27,17 @@ namespace ApiWrapper.Implementation.RequestSender
     public class RiotRequestSender : IRequestSender
     {
         private IRequestLimiter<ERiotRequest> limiter;
+        private int retryCount;
 
         /// <summary>
         /// RiotRequestSender contructor
         /// </summary>
         /// <param name="limiter">IRequestLimiter implementation</param>
-        public RiotRequestSender(IRequestLimiter<ERiotRequest> limiter)
+        /// <param name="retryCount">Amount of unsuccessful request retry</param>
+        public RiotRequestSender(IRequestLimiter<ERiotRequest> limiter, int retryCount)
         {
             this.limiter = limiter;
+            this.retryCount = retryCount;
         }
 
         /// <summary>
@@ -55,34 +58,33 @@ namespace ApiWrapper.Implementation.RequestSender
             };
 
             PrepareRequestWithHeaders(client, request.GetHeaderParams());
-
+   
             try
             {
                 if (request.GetType() == typeof(RiotRequest))
                 {
-                    await limiter.Limit(((RiotRequest)request).RiotRequestType);
-                }
-
-                response = await client.GetAsync(request.GetHttpAddress()).ConfigureAwait(false);
-                if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                {
-                    System.Diagnostics.Debug.WriteLine("Too many requests");
-                    if (response.Headers.Contains("Retry-After"))
+                    int currentRetryCount = 0;
+                    do
                     {
-                        List<string> retryAfterValues = response.Headers.GetValues("Retry-After").ToList();
-                        if (retryAfterValues.Any())
+                        await limiter.Limit(((RiotRequest) request).RiotRequestType);
+                        response = await client.GetAsync(request.GetHttpAddress()).ConfigureAwait(false);
+                        if (response.IsSuccessStatusCode)
                         {
-                            System.Diagnostics.Debug.WriteLine("Delay " + Int32.Parse(retryAfterValues.First()) * 1000 + " ms");
-                            await Task.Delay(Int32.Parse(retryAfterValues.First()) * 1000).ConfigureAwait(false);
-                            if (request.GetType() == typeof(RiotRequest))
-                            {
-                                await limiter.Limit(((RiotRequest)request).RiotRequestType);
-                            }
-
-                            response = await client.GetAsync(request.GetHttpAddress()).ConfigureAwait(false);
+                            break;
                         }
-                    }
+
+                        if (response.Headers.Contains("Retry-After"))
+                        {
+                            List<string> retryAfterValues = response.Headers.GetValues("Retry-After").ToList();
+                            if (retryAfterValues.Any())
+                            {
+                                await Task.Delay(int.Parse(retryAfterValues.First()) * 1000).ConfigureAwait(false);
+                            }
+                        }
+                        currentRetryCount++;
+                    } while (currentRetryCount <= this.retryCount);
                 }
+
             }
             catch (Exception ex)
             {
@@ -90,6 +92,16 @@ namespace ApiWrapper.Implementation.RequestSender
             }
 
             return new RiotResponse(response, exception);
+        }
+
+        
+        /// <summary>
+        /// Retrurns current maximum retry count of unsuccessful requests
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxRetryCount()
+        {
+            return retryCount;
         }
 
         private void PrepareRequestWithHeaders(HttpClient client, Dictionary<string, string> headerParameters)

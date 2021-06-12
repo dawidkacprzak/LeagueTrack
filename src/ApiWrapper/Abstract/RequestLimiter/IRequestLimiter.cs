@@ -3,7 +3,10 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
+using System;
 using System.Threading.Tasks;
+using ApiWrapper.Abstract.Response;
 
 namespace ApiWrapper.Abstract.RequestLimiter
 {

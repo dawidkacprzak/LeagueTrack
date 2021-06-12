@@ -21,14 +21,24 @@ namespace ApiWrapper.Implementation.RequestSender
     public class RiotRequestSenderBuilder : IRequestSenderBuilder
     {
         private RiotRequestSender sender;
+        private int retryCount;
 
+        /// <summary>
+        /// Builds new Riot request sender with retry count specified
+        /// </summary>
+        public RiotRequestSenderBuilder(int retryCount = 3)
+        {
+            this.retryCount = retryCount;
+        }
+        
         /// <summary>
         /// Builds new Riot request sender
         /// </summary>
         public void BuildRequestSender()
         {
-            sender = new RiotRequestSender(RiotSingletonRequestLimiter.Instance);
+            sender = new RiotRequestSender(RiotSingletonRequestLimiter.Instance,retryCount);
         }
+        
 
         /// <summary>
         /// Returns built request sender created by BuildRequestSender method

@@ -35,7 +35,7 @@ namespace Test.Integration.ApiWrapper
             instance = new Api(IntegrationConfiguration.API_KEY, 20, 100, ELocation.EUNE);
             requestSenderDirector = new RequestSenderDirector
             {
-                builder = new RiotRequestSenderBuilder()
+                builder = new RiotRequestSenderBuilder(3)
             };
             requestSenderDirector.Construct();
 
@@ -135,6 +135,33 @@ namespace Test.Integration.ApiWrapper
             });
         }
 
+        [Test]
+        public void Check_SummonerV4_Does_Not_Throw_Exception_When_Fail_From_Bad_Parameter_Async_With_Retry_Count()
+        {
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                RequestSenderDirector localRequestSenderDirector = new RequestSenderDirector
+                {
+                    builder = new RiotRequestSenderBuilder(10)
+                };
+                RiotRequestSender localRequestSender = (RiotRequestSender)localRequestSenderDirector.builder.GetRequestSender();
+
+                RiotRequest request = (RiotRequest)instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
+                RiotResponse response = (RiotResponse)requestSender.GetAsync(request).Result;
+                Summoner summoner = JsonConvert.DeserializeObject<Summoner>(await response.GetResponseContentAsync());
+                RiotRequest requestByAccount = (RiotRequest)instance.SummonerV4.ByAccount(summoner.accountId);
+                RiotRequest requestByPuuid = (RiotRequest)instance.SummonerV4.ByPuuid(summoner.puuid);
+                RiotRequest requestBySummoner = (RiotRequest)instance.SummonerV4.BySummoner(summoner.id);
+
+                RiotResponse responseByAccount = (RiotResponse)requestSender.GetAsync(requestByAccount).Result;
+                RiotResponse responseByPuuid = (RiotResponse)requestSender.GetAsync(requestByPuuid).Result;
+                RiotResponse responseBySummoner = (RiotResponse)requestSender.GetAsync(requestBySummoner).Result;
+                Assert.IsNull(responseByAccount.GetThrownException());
+                Assert.IsNull(responseByPuuid.GetThrownException());
+                Assert.IsNull(responseBySummoner.GetThrownException());
+                Assert.IsNull(response.GetThrownException());
+            });
+        }
 
         [Test]
         public void Check_SummonerV4_Does_Not_Throw_Exception_When_Fail_From_Bad_Parameter()
@@ -175,5 +202,6 @@ namespace Test.Integration.ApiWrapper
         {
             return new Api(IntegrationConfiguration.API_KEY, 20, 100, location);
         }
+       
     }
 }

@@ -14,6 +14,7 @@ namespace ApiWrapper.Abstract.RequestSender
         /// Builds request object
         /// </summary>
         public void BuildRequestSender();
+        
         /// <summary>
         /// Returns request sender built object - object is build only when BuildRequestSender method invoked
         /// </summary>

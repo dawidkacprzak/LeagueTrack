@@ -22,5 +22,10 @@ namespace ApiWrapper.Abstract.RequestSender
         /// <returns>IResponse object implementation</returns>
         public Task<IResponse> GetAsync(IRequest request);
 
+        /// <summary>
+        /// Maximum amount of retry after unsuccessful request
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxRetryCount();
     }
 }

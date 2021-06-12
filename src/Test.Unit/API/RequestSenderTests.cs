@@ -38,5 +38,20 @@ namespace Test.Unit
                 RiotRequestSender sender = (RiotRequestSender) director.builder.GetRequestSender();
             });
         }
+        
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(656)]
+        [TestCase(2)]
+        [TestCase(6)]
+
+        public void Riot_Request_Sender_Creation_By_Builder_Max_Retry_Count_Correct(int retryCount)
+        {
+            RequestSenderDirector director = new RequestSenderDirector();
+            director.builder = new RiotRequestSenderBuilder(retryCount);
+            director.Construct();
+            Assert.AreEqual(director.builder.GetRequestSender().GetMaxRetryCount(),retryCount);
+        }
     }
 }
