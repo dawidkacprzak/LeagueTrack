@@ -3,6 +3,7 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
 using ApiWrapper.Endpoints;
 using ApiWrapper.Enum;
 using ApiWrapper.Implementation.RequestLimiter;
@@ -21,6 +22,11 @@ namespace ApiWrapper
         public readonly EndpointSummonerV4 SummonerV4;
 
         /// <summary>
+        /// Returns current requests location
+        /// </summary>
+        public ELocation CurrentLocation { get; private set; }
+
+        /// <summary>
         /// Retrieves new api object
         /// </summary>
         /// <param name="apiKey">Prod/Dev riot api key</param>
@@ -28,11 +34,12 @@ namespace ApiWrapper
         /// <param name="twoMinRateLimit">Two minute api rate limit</param>
         /// <param name="location">Server location</param>
         /// <returns>New Api object</returns>
-        public Api(string apiKey, int oneSecRateLimit, int twoMinRateLimit,ELocation location)
+        public Api(string apiKey, int oneSecRateLimit, int twoMinRateLimit, ELocation location)
         {
             RiotSingletonRequestLimiter.Instance.AbsoluteOneSecRateLimit = oneSecRateLimit;
             RiotSingletonRequestLimiter.Instance.AbsoluteTwoMinRateLimit = twoMinRateLimit;
-            SummonerV4 = new EndpointSummonerV4(apiKey,location);
+            CurrentLocation = location;
+            SummonerV4 = new EndpointSummonerV4(apiKey, location);
         }
     }
 }

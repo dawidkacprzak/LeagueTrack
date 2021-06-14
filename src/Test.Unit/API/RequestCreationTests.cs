@@ -3,6 +3,7 @@
 * License: https://www.gnu.org/licenses/gpl-3.0.html GPL version 3
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
+
 using ApiWrapper;
 using ApiWrapper.Enum;
 using ApiWrapper.Implementation;
@@ -13,6 +14,7 @@ using System.Linq;
 using ApiWrapper.Abstract;
 using ApiWrapper.Abstract.Request;
 using ApiWrapper.Abstract.RequestSender;
+using ApiWrapper.Facade;
 using ApiWrapper.Implementation.Request;
 using ApiWrapper.Implementation.RequestSender;
 using Test.Unit.Stub;
@@ -165,21 +167,37 @@ namespace Test.Unit
         {
             Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.BySummoner("encryptedSummonerId");
-            request.SetQueryParams(new Dictionary<string, string>(){{"Key","Value"}});
+            request.SetQueryParams(new Dictionary<string, string>() {{"Key", "Value"}});
             Assert.AreEqual(request.GetHttpAddress(),
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/encryptedSummonerId?Key=Value");
-            Assert.IsNotNull(request.GetHttpAddress());  
+            Assert.IsNotNull(request.GetHttpAddress());
         }
-        
+
         [Test]
         public void API_Endpoint_Query_Parameter_Multiple_Built_Properly()
         {
             Api instance = new Api(TestKey, limit1Min, limit2Min, ELocation.EUNE);
             RiotRequest request = (RiotRequest) instance.SummonerV4.BySummoner("encryptedSummonerId");
-            request.SetQueryParams(new Dictionary<string, string>(){{"Key","Value"},{"Key2","Value2"}});
+            request.SetQueryParams(new Dictionary<string, string>() {{"Key", "Value"}, {"Key2", "Value2"}});
             Assert.AreEqual(request.GetHttpAddress(),
                 "https://eun1.api.riotgames.com/lol/summoner/v4/summoners/encryptedSummonerId?Key=Value&Key2=Value2");
-            Assert.IsNotNull(request.GetHttpAddress());  
+            Assert.IsNotNull(request.GetHttpAddress());
+        }
+
+        [Test]
+        public void Riot_Face_Location_Change_Works()
+        {
+            RiotFacade facade = new RiotFacade();
+            ELocation currentLocation = facade.GetLocation();
+            ELocation deepLocation = facade.ApiInstance.CurrentLocation;
+
+            facade.SetLocation(ELocation.LA1);
+
+            ELocation changedCurrentLocation = facade.GetLocation();
+            ELocation changedDeepLocation = facade.ApiInstance.CurrentLocation;
+
+            Assert.IsTrue(changedDeepLocation == changedCurrentLocation && currentLocation == deepLocation &&
+                          changedDeepLocation != currentLocation);
         }
     }
 }

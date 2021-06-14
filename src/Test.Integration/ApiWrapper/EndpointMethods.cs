@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using ApiWrapper;
 using ApiWrapper.Abstract.Response;
 using ApiWrapper.Enum;
+using ApiWrapper.Facade;
 using ApiWrapper.Implementation.Request;
 using ApiWrapper.Implementation.RequestSender;
 using ApiWrapper.Implementation.Response;
@@ -144,23 +145,47 @@ namespace Test.Integration.ApiWrapper
                 {
                     builder = new RiotRequestSenderBuilder(10)
                 };
-                RiotRequestSender localRequestSender = (RiotRequestSender)localRequestSenderDirector.builder.GetRequestSender();
+                RiotRequestSender localRequestSender =
+                    (RiotRequestSender) localRequestSenderDirector.builder.GetRequestSender();
 
-                RiotRequest request = (RiotRequest)instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
-                RiotResponse response = (RiotResponse)requestSender.GetAsync(request).Result;
+                RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g");
+                RiotResponse response = (RiotResponse) requestSender.GetAsync(request).Result;
                 Summoner summoner = JsonConvert.DeserializeObject<Summoner>(await response.GetResponseContentAsync());
-                RiotRequest requestByAccount = (RiotRequest)instance.SummonerV4.ByAccount(summoner.accountId);
-                RiotRequest requestByPuuid = (RiotRequest)instance.SummonerV4.ByPuuid(summoner.puuid);
-                RiotRequest requestBySummoner = (RiotRequest)instance.SummonerV4.BySummoner(summoner.id);
+                RiotRequest requestByAccount = (RiotRequest) instance.SummonerV4.ByAccount(summoner.accountId);
+                RiotRequest requestByPuuid = (RiotRequest) instance.SummonerV4.ByPuuid(summoner.puuid);
+                RiotRequest requestBySummoner = (RiotRequest) instance.SummonerV4.BySummoner(summoner.id);
 
-                RiotResponse responseByAccount = (RiotResponse)requestSender.GetAsync(requestByAccount).Result;
-                RiotResponse responseByPuuid = (RiotResponse)requestSender.GetAsync(requestByPuuid).Result;
-                RiotResponse responseBySummoner = (RiotResponse)requestSender.GetAsync(requestBySummoner).Result;
+                RiotResponse responseByAccount = (RiotResponse) requestSender.GetAsync(requestByAccount).Result;
+                RiotResponse responseByPuuid = (RiotResponse) requestSender.GetAsync(requestByPuuid).Result;
+                RiotResponse responseBySummoner = (RiotResponse) requestSender.GetAsync(requestBySummoner).Result;
                 Assert.IsNull(responseByAccount.GetThrownException());
                 Assert.IsNull(responseByPuuid.GetThrownException());
                 Assert.IsNull(responseBySummoner.GetThrownException());
                 Assert.IsNull(response.GetThrownException());
             });
+        }
+
+        [Test]
+        public void
+            Check_SummonerV4_Does_Not_Throw_Exception_When_Fail_From_Bad_Parameter_Async_With_Retry_Count_Facade()
+        {
+            RiotFacade facade = new RiotFacade();
+            facade.SetLocation(ELocation.EUNE);
+
+
+            RiotResponse response = facade
+                .GetAsync(facade.ApiInstance.SummonerV4.ByName("NICKNAMETHATDOESNTEXISTSGW23f2g")).Result;
+            RiotResponse responseByAccount = facade
+                .GetAsync(facade.ApiInstance.SummonerV4.ByAccount("NICKNAMETHATDOESNTEXISTSGW23f2g")).Result;
+            RiotResponse responseByPuuid = facade
+                .GetAsync(facade.ApiInstance.SummonerV4.ByPuuid("NICKNAMETHATDOESNTEXISTSGW23f2g")).Result;
+            RiotResponse responseBySummoner = facade
+                .GetAsync(facade.ApiInstance.SummonerV4.BySummoner("NICKNAMETHATDOESNTEXISTSGW23f2g")).Result;
+
+            Assert.IsNull(responseByAccount.GetThrownException());
+            Assert.IsNull(responseByPuuid.GetThrownException());
+            Assert.IsNull(responseBySummoner.GetThrownException());
+            Assert.IsNull(response.GetThrownException());
         }
 
         [Test]
@@ -193,15 +218,22 @@ namespace Test.Integration.ApiWrapper
                 RiotRequest request = (RiotRequest) instance.SummonerV4.ByName("Rekurencja");
                 request.SetMethodPath("VWG2g"); //Force to invalid host 
                 RiotResponse response = (RiotResponse) requestSender.GetAsync(request).Result;
-                Assert.IsNotNull(response.GetThrownException());
-                Assert.IsNotNull(response.GetMessage());
             });
+        }
+
+        [Test]
+        public async Task Check_SummonerV4_Does_Not_Throw_Facade()
+        {
+            RiotFacade facade = new RiotFacade(ELocation.EUNE);
+            RiotResponse response = await facade.GetAsync(facade.ApiInstance.SummonerV4.ByName("Rekurencja"));
+
+            Assert.IsNull(response.GetThrownException());
+            Assert.IsNull(response.GetMessage());
         }
 
         private Api GetServerApiInstance(ELocation location)
         {
             return new Api(IntegrationConfiguration.API_KEY, 20, 100, location);
         }
-       
     }
 }
