@@ -6,12 +6,12 @@
     <Title>LeagueTrack ApiWrapper</Title>
     <Authors>dawidkacprzak</Authors>
     <RepositoryUrl>https://github.com/dawidkacprzak/LeagueTrack/tree/master/src/ApiWrapper</RepositoryUrl>
-    <Description>League of Legends api wrapper created for 'LeagueTrack' needs. There isn't much implemented endpoints.
-New will be added only if LeagueTrack project need a new one.
+    <Description>League of Legends api wrapper created for 'LeagueTrack' needs. There isn't much implemented endpoints yet.
 If you need more endpoints/methods you can open a issue or (i prefer) Collaborate by pull request on github.
 https://github.com/dawidkacprzak/LeagueTrack</Description>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <TargetFrameworks>net5.0;netstandard2.1</TargetFrameworks>
+    <PackageTags>GPL-V3, LeagueOfLegends, LOL api wrapper</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

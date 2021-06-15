@@ -101,17 +101,19 @@ Summoner summoner = JsonConvert.DeserializeObject<Summoner>(getSummonerByNameRes
 
 ### Full list of **endpoints** and **methods**
 
-| Endpoint     |               Method               | Response Mapping Object |
-| ------------ | :--------------------------------: | :---------------------: |
-| `SummonerV4` |      `ByName(Summoner_Name)`       |       `Summoner`        |
-| `SummonerV4` | `ByAccount(Encrypted_account_id)`  |       `Summoner`        |
-| `SummonerV4` |     `ByPuuid(Encrypted_Puuid)`     |       `Summoner`        |
-| `SummonerV4` | `BySummoner(Encrypted_SummonerId)` |       `Summoner`        |
+| Endpoint     |                      Method                       | Response Mapping Object |
+| ------------ | :-----------------------------------------------: | :---------------------: |
+| `SummonerV4` |              `ByName(Summoner_Name)`              |       `Summoner`        |
+| `SummonerV4` |         `ByAccount(Encrypted_account_id)`         |       `Summoner`        |
+| `SummonerV4` |            `ByPuuid(Encrypted_Puuid)`             |       `Summoner`        |
+| `SummonerV4` |        `BySummoner(Encrypted_SummonerId)`         |       `Summoner`        |
+| `AccountV1`  |      `AccountsByPuuid(puuid)`      |       `Account`        |
+| `AccountV1`  |        `AccountsByRiotId(gameName, riotId)`      |       `Account`        |
+| `AccountV1`  | `ActiveShardsByGameByPuuid(EGame, puuid)` |       `ShardAccount`        |
 
 <br>
 
-> New endpoints will be created only if this project need a new one.  
-> If you need more endpoints/methods you can open a issue or (i prefer) `Collaborate by pull request`
+> If you need more endpoints/methods you can open a issue or (i prefer) `Collaborate by pull request`.
 
 ### Rate limiter
 
@@ -134,6 +136,7 @@ You can change default retry count by modify constructor of `RiotRequestSenderBu
 ```cs
 new RiotRequestSenderBuilder(<optional retry count>);
 ```
+
 ---
 
 ### **Simple way of sending requests**
@@ -154,7 +157,7 @@ thats all, to configure this approach you should configure `FacadeGlobalConfig` 
 | Configuration     |                     Description                      | Configuration |
 | ----------------- | :--------------------------------------------------: | :-----------: |
 | `Api_key`         |                   Set riot api key                   |  `Mandatory`  |
-| `Elocation`       |   Default location of requests - default `EUNE`    |  `Mandatory`  |
+| `Elocation`       |    Default location of requests - default `EUNE`     |  `Mandatory`  |
 | `OneSecondLimit`  |   Set maximum request rate per second - default 10   |   optional    |
 | `TwoMinutesLimit` | Set maximum request rate per 2 minutes - default 100 |   optional    |
 | `MaxRetryCount`   |  Set amount of retry if request failed - default 3   |   optional    |
@@ -169,5 +172,3 @@ You can always run it .
 `Test.Integration` project needs the small configuration - just replace `API_KEY` field in `IntegrationConfiguration.cs` file.
 
 If you dont have a production key you can always use development.
-
-

@@ -64,7 +64,22 @@ namespace ApiWrapper.Enum
         /// <summary>
         /// Turkey
         /// </summary>
-        TR = 10
+        TR = 10,
+
+        /// <summary>
+        /// America - only for AccountV1 endpoint
+        /// </summary>
+        AMERICAS = 11,
+
+        /// <summary>
+        /// Asia - only for AccountV1 endpoint
+        /// </summary>
+        ASIA = 12,
+
+        /// <summary>
+        /// Europe - only for AccountV1 endpoint
+        /// </summary>
+        EUROPE = 13
     }
 
     /// <summary>
@@ -95,6 +110,39 @@ namespace ApiWrapper.Enum
         /// <summary>
         /// Endpoint SummonerV4 - BySummoner method
         /// </summary>
-        SummonerV4BySummoner = 4
+        SummonerV4BySummoner = 4,
+
+        /// <summary>
+        /// Endpoint AccountV1 - Accounts by puuid method
+        /// </summary>
+        AccountV1AccountsByPuuid = 5,
+
+        /// <summary>
+        /// Endpoint AccountV1 - Accounts by riot id method
+        /// </summary>
+        AccountV1AccountsByRiotId = 6,
+
+        /// <summary>
+        /// Endpoint AccountV1 - Active shards by game method
+        /// </summary>
+        AccountV1ActiveShardsByGame = 7
+    }
+    /// <summary>
+    /// Game enum for AccountV1, ActiveShardsByGameByPuuid method
+    /// </summary>
+    public enum EGame
+    {
+        /// <summary>
+        /// No infomation
+        /// </summary>
+        NoInfo = 0,
+        /// <summary>
+        /// Valorant game
+        /// </summary>
+        Valorant = 1,
+        /// <summary>
+        /// League of runeterra game
+        /// </summary>
+        LeagueOfRuneterra = 2
     }
 }

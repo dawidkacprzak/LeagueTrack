@@ -14,6 +14,8 @@ using System.Linq;
 using ApiWrapper.Abstract;
 using ApiWrapper.Abstract.Request;
 using ApiWrapper.Abstract.RequestSender;
+using ApiWrapper.Endpoints;
+using ApiWrapper.Extension;
 using ApiWrapper.Facade;
 using ApiWrapper.Implementation.Request;
 using ApiWrapper.Implementation.RequestSender;
@@ -85,9 +87,43 @@ namespace Test.Unit
             Assert.AreEqual(ELocation.RU.ToTextName(), "ru");
             Assert.AreEqual(ELocation.TR.ToTextName(), "tr1");
             Assert.AreEqual(ELocation.EUW.ToTextName(), "euw1");
+            Assert.AreEqual(ELocation.EUROPE.ToTextName(), "europe");
+            Assert.AreEqual(ELocation.ASIA.ToTextName(), "asia");
+            Assert.AreEqual(ELocation.AMERICAS.ToTextName(), "americas");
+
             Assert.Throws<NotImplementedException>(() => ((ELocation) (-3)).ToTextName());
             int eLocationCount = Enum.GetNames(typeof(ELocation)).Length;
-            Assert.AreEqual(eLocationCount, 11); //Just to don't forget about insert and CHECK next locations. 
+            Assert.AreEqual(eLocationCount, 14); //Just to don't forget about insert and CHECK new locations. 
+        }
+        
+        [Test]
+        public void ELocation_To_AccountV1_Location_Correct()
+        {
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                ELocation.NoInfo.MapToAccountV1Location();
+            });
+            Assert.AreEqual(ELocation.EUNE.MapToAccountV1Location(), ELocation.EUROPE);
+            Assert.AreEqual(ELocation.JP.MapToAccountV1Location(), ELocation.ASIA);
+            Assert.AreEqual(ELocation.OC.MapToAccountV1Location(), ELocation.ASIA);
+            Assert.AreEqual(ELocation.KR.MapToAccountV1Location(), ELocation.ASIA);
+            Assert.AreEqual(ELocation.LA1.MapToAccountV1Location(), ELocation.AMERICAS);
+            Assert.AreEqual(ELocation.LA2.MapToAccountV1Location(), ELocation.AMERICAS);
+            Assert.AreEqual(ELocation.NA.MapToAccountV1Location(), ELocation.AMERICAS);
+            Assert.AreEqual(ELocation.RU.MapToAccountV1Location(), ELocation.ASIA);
+            Assert.AreEqual(ELocation.TR.MapToAccountV1Location(), ELocation.EUROPE);
+            Assert.AreEqual(ELocation.EUW.MapToAccountV1Location(), ELocation.EUROPE);
+        }
+
+        [Test]
+        public void EGame_Name_Correct()
+        {
+            Assert.Throws<NotImplementedException>(() =>
+            {
+                EGame.NoInfo.ToApiName();
+            });
+            Assert.AreEqual(EGame.Valorant.ToApiName(), "val");
+            Assert.AreEqual(EGame.LeagueOfRuneterra.ToApiName(), "lor");
         }
 
         [Test]

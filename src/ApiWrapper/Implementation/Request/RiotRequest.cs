@@ -6,6 +6,7 @@
 
 using System;
 using ApiWrapper.Abstract.Request;
+using ApiWrapper.Endpoints;
 using ApiWrapper.Enum;
 
 namespace ApiWrapper.Implementation.Request

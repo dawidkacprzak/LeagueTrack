@@ -4,9 +4,10 @@
 * Author: Dawid Kacprzak https://github.com/dawidkacprzak 
 */
 using System;
+using System.Linq;
 using ApiWrapper.Enum;
 
-namespace ApiWrapper
+namespace ApiWrapper.Endpoints
 {
     /// <summary>
     /// Extenstion class for location enum
@@ -46,8 +47,35 @@ namespace ApiWrapper
                     return "ru";
                 case ELocation.TR:
                     return "tr1";
+                case ELocation.ASIA:
+                    return "asia";
+                case ELocation.AMERICAS:
+                    return "americas";
+                case ELocation.EUROPE:
+                    return "europe";
                 default: throw new NotImplementedException();
             }
         }
+
+        /// <summary>
+        /// Maps location to corresponding AccountV1 enum
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns>Mapped location</returns>
+        public static ELocation MapToAccountV1Location(this ELocation location)
+        {
+            ELocation[] europeLocations = {ELocation.TR,ELocation.EUNE,ELocation.EUW, ELocation.EUROPE};
+            ELocation[] americaLocations = {ELocation.LA1, ELocation.LA2,ELocation.NA, ELocation.AMERICAS};
+            ELocation[] asiaLocations = {ELocation.JP, ELocation.OC, ELocation.KR, ELocation.RU, ELocation.ASIA};
+
+            if (europeLocations.Contains(location))
+                return ELocation.EUROPE;
+            if (americaLocations.Contains(location))
+                return ELocation.AMERICAS;
+            if (asiaLocations.Contains(location))
+                return ELocation.ASIA;
+            throw new NotImplementedException("This location is not supported by MapToAccountV1Location function");
+        }
     }
+    
 }

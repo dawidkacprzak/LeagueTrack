@@ -22,6 +22,11 @@ namespace ApiWrapper
         public readonly EndpointSummonerV4 SummonerV4;
 
         /// <summary>
+        /// https://developer.riotgames.com/apis#account-v1 implementation
+        /// </summary>
+        public readonly AccountV1 AccountV1;
+
+        /// <summary>
         /// Returns current requests location
         /// </summary>
         public ELocation CurrentLocation { get; private set; }
@@ -40,6 +45,7 @@ namespace ApiWrapper
             RiotSingletonRequestLimiter.Instance.AbsoluteTwoMinRateLimit = twoMinRateLimit;
             CurrentLocation = location;
             SummonerV4 = new EndpointSummonerV4(apiKey, location);
+            AccountV1 = new AccountV1(apiKey, location);
         }
     }
 }

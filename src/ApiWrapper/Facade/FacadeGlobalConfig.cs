@@ -1,4 +1,5 @@
-﻿using ApiWrapper.Enum;
+﻿using System;
+using ApiWrapper.Enum;
 
 namespace ApiWrapper.Facade
 {
@@ -7,7 +8,7 @@ namespace ApiWrapper.Facade
     /// </summary>
     public static class FacadeGlobalConfig
     {
-        public static string Api_key = string.Empty;
+        public static string Api_key = Environment.GetEnvironmentVariable("KEY");
         public static int OneSecondLimit = 10;
         public static int TwoMinutesLimit = 100;
         public static ELocation Location = ELocation.EUNE;
